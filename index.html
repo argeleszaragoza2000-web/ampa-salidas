@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Asistente de permisos de salida del internado</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="site-header">
+      <div>
+        <div class="brand-name">AMPA Cité Scolaire René Billères</div>
+        <div class="brand-subtitle">Asistente de permisos de salida del internado</div>
+      </div>
+    </header>
+
+    <section class="panel" id="screenWelcome">
+      <div class="progress">Paso 1 de 4</div>
+      <h1>Preparar una autorización de salida</h1>
+      <p class="intro">Esta herramienta ayuda a las familias a redactar el correo de autorización en francés para Vie Scolaire.</p>
+      <div class="notice">
+        Los datos introducidos no se almacenan. Se utilizan únicamente para preparar el correo en este navegador.
+      </div>
+      <div class="actions actions-right">
+        <button class="button primary" id="startButton">Comenzar</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="screenType">
+      <div class="progress">Paso 2 de 4</div>
+      <h1>¿Qué tipo de salida desea solicitar?</h1>
+      <p class="secondary-text">Seleccione una opción para continuar.</p>
+
+      <div class="type-grid" role="radiogroup" aria-label="Tipo de salida">
+        <button class="type-card" data-type="vacaciones" type="button">
+          <strong>Vacaciones escolares</strong>
+          <span>Salida y regreso coincidiendo con un periodo de vacaciones.</span>
+        </button>
+
+        <button class="type-card" data-type="pernocta" type="button">
+          <strong>Salida puntual con pernocta</strong>
+          <span>Salida en la que el alumno duerme fuera del internado.</span>
+        </button>
+
+        <button class="type-card" data-type="puntual" type="button">
+          <strong>Salida puntual sin pernocta</strong>
+          <span>Salida de unas horas con regreso el mismo día.</span>
+        </button>
+      </div>
+
+      <div class="actions">
+        <button class="button secondary" id="typeBack">Volver</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="screenForm">
+      <div class="progress">Paso 3 de 4</div>
+      <h1 id="formTitle">Datos del permiso</h1>
+
+      <form id="permissionForm" novalidate>
+        <h2>Alumno</h2>
+        <div class="compact-grid">
+          <label>
+            Nombre y apellidos del alumno
+            <input id="studentName" type="text" autocomplete="name" required>
+          </label>
+
+          <label>
+            Curso
+            <input id="studentClass" type="text" placeholder="Ej.: 4ème, 3ème, Seconde..." required>
+          </label>
+
+          <label class="span-2">
+            Email del alumno en copia, opcional
+            <input id="studentEmail" type="email" autocomplete="email">
+          </label>
+        </div>
+
+        <h2>Padre, madre o tutor legal</h2>
+        <div class="compact-grid">
+          <label>
+            Nombre y apellidos
+            <input id="guardianName" type="text" autocomplete="name" required>
+          </label>
+
+          <label>
+            Email
+            <input id="guardianEmail" type="email" autocomplete="email" required>
+          </label>
+
+          <label>
+            Teléfono de contacto
+            <input id="guardianPhone" type="tel" autocomplete="tel" required>
+          </label>
+
+          <label>
+            Documento de identidad
+            <input id="guardianId" type="text" required>
+          </label>
+        </div>
+
+        <div class="notice small">
+          El correo deberá revisarse y enviarse desde su cuenta personal.
+        </div>
+
+        <div id="vacacionesFields" class="details-block hidden">
+          <h2>Datos de vacaciones escolares</h2>
+          <div class="compact-grid">
+            <label>
+              Fecha de salida
+              <input id="vacDepartureDate" type="date">
+            </label>
+            <label>
+              Hora de salida
+              <input id="vacDepartureTime" type="time">
+            </label>
+            <label>
+              Fecha de regreso
+              <input id="vacReturnDate" type="date">
+            </label>
+            <label>
+              Hora de regreso
+              <input id="vacReturnTime" type="time">
+            </label>
+          </div>
+
+          <div class="radio-block" id="vacBusBlock">
+            <span>¿Usará el autobús del AMPA?</span>
+            <label class="radio-inline"><input type="radio" name="vacUsesBus" value="Oui"> Sí</label>
+            <label class="radio-inline"><input type="radio" name="vacUsesBus" value="Non"> No</label>
+          </div>
+
+          <label class="checkbox">
+            <input id="authorize1300" type="checkbox">
+            Autorizo la salida del establecimiento a las 13:00, si procede.
+          </label>
+        </div>
+
+        <div id="pernoctaFields" class="details-block hidden">
+          <h2>Datos de la salida puntual con pernocta</h2>
+          <div class="compact-grid">
+            <label>
+              Fecha de salida
+              <input id="overnightDepartureDate" type="date">
+            </label>
+            <label>
+              Hora de salida
+              <input id="overnightDepartureTime" type="time" value="18:30">
+            </label>
+            <label>
+              Fecha de regreso
+              <input id="overnightReturnDate" type="date">
+            </label>
+            <label>
+              Hora de regreso
+              <input id="overnightReturnTime" type="time" value="16:00">
+            </label>
+          </div>
+
+          <h2>Persona responsable</h2>
+          <div class="radio-block" id="overnightResponsibleTypeBlock">
+            <span>¿El alumno sale con sus padres o con otra persona?</span>
+            <label class="radio-inline"><input type="radio" name="overnightResponsibleType" value="parents"> Sale con sus padres</label>
+            <label class="radio-inline"><input type="radio" name="overnightResponsibleType" value="other"> Sale con otra persona</label>
+          </div>
+
+          <div id="overnightOtherResponsibleFields" class="nested-block hidden">
+            <div class="compact-grid">
+              <label>
+                Nombre y apellidos de la persona adulta responsable
+                <input id="responsibleName" type="text">
+              </label>
+              <label>
+                Relación con el alumno
+                <input id="responsibleRelation" type="text" placeholder="Ej.: familiar, entrenador, familia de acogida...">
+              </label>
+              <label>
+                Teléfono de la persona responsable
+                <input id="responsiblePhone" type="tel">
+              </label>
+              <label>
+                Documento de identidad de la persona responsable <span class="hint">opcional</span>
+                <input id="responsibleId" type="text">
+              </label>
+            </div>
+          </div>
+
+          <h2>Motivo</h2>
+          <div class="compact-grid">
+            <label class="span-2">
+              Motivo de la salida
+              <select id="overnightReason">
+                <option value="">Seleccione una opción</option>
+                <option value="sport">Salida actividad extraescolar deportiva</option>
+                <option value="course">Salida actividad extraescolar curso</option>
+                <option value="activity">Salida actividad extraescolar</option>
+                <option value="other">Otro motivo, redactado en francés</option>
+                <option value="none">No deseamos incluir motivo</option>
+              </select>
+            </label>
+
+            <label class="span-2 hidden" id="overnightOtherReasonWrapper">
+              Redacte el motivo en francés
+              <input id="overnightOtherReason" type="text">
+            </label>
+          </div>
+
+          <div class="notice small hidden" id="overnightNoReasonNote">
+            El correo se generará sin indicar motivo de salida.
+          </div>
+        </div>
+
+        <div id="puntualFields" class="details-block hidden">
+          <h2>Datos de la salida puntual sin pernocta</h2>
+          <div class="compact-grid">
+            <label>
+              Fecha
+              <input id="dayDate" type="date">
+            </label>
+            <label>
+              Hora de salida
+              <input id="dayDepartureTime" type="time">
+            </label>
+            <label>
+              Hora de regreso
+              <input id="dayReturnTime" type="time">
+            </label>
+            <label>
+              Motivo de la salida
+              <select id="dayReason">
+                <option value="">Seleccione una opción</option>
+                <option value="sport">Salida actividad extraescolar deportiva</option>
+                <option value="course">Salida actividad extraescolar curso</option>
+                <option value="activity">Salida actividad extraescolar</option>
+                <option value="other">Otro motivo, redactado en francés</option>
+                <option value="none">No deseamos incluir motivo</option>
+              </select>
+            </label>
+
+            <label class="span-2 hidden" id="dayOtherReasonWrapper">
+              Redacte el motivo en francés
+              <input id="dayOtherReason" type="text">
+            </label>
+          </div>
+
+          <div class="notice small hidden" id="dayNoReasonNote">
+            El correo se generará sin indicar motivo de salida.
+          </div>
+
+          <h2>Persona acompañante</h2>
+          <div class="radio-block" id="dayCompanionBlock">
+            <span>¿Desea incluir una persona acompañante?</span>
+            <label class="radio-inline"><input type="radio" name="dayHasCompanion" value="yes"> Sí</label>
+            <label class="radio-inline"><input type="radio" name="dayHasCompanion" value="no"> No</label>
+          </div>
+
+          <div id="dayCompanionFields" class="nested-block hidden">
+            <div class="compact-grid">
+              <label>
+                Nombre de la persona acompañante
+                <input id="dayResponsibleName" type="text">
+              </label>
+              <label>
+                Teléfono de la persona acompañante
+                <input id="dayResponsiblePhone" type="tel">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="button secondary" type="button" id="formBack">Volver</button>
+          <button class="button primary" type="submit">Revisar correo</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="panel hidden" id="screenError">
+      <div class="progress">Revisión necesaria</div>
+      <h1>No se puede generar el correo todavía</h1>
+      <p>Revise los campos obligatorios marcados.</p>
+      <div class="notice warning">
+        <ul id="errorList"></ul>
+      </div>
+      <div class="actions actions-right">
+        <button class="button primary" id="backToComplete">Volver a completar</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="screenReview">
+      <div class="progress">Paso 4 de 4</div>
+      <h1>Revise el correo antes de enviarlo</h1>
+
+      <div class="email-meta compact">
+        <p><strong>Para:</strong> <span id="emailTo"></span></p>
+        <p><strong>Asunto:</strong> <span id="emailSubject"></span></p>
+      </div>
+
+      <div class="notice gmail-note">
+        Antes de enviar, compruebe en Gmail u Outlook que el correo se ha abierto con su cuenta personal. Google puede abrir la última cuenta activa del navegador.
+      </div>
+
+      <pre class="email-preview" id="emailPreview"></pre>
+
+      <div class="actions stacked-mobile">
+        <button class="button secondary" id="reviewBack">Volver</button>
+        <button class="button primary" id="openGmail">Abrir en Gmail</button>
+        <button class="button primary" id="openOutlook">Abrir en Outlook</button>
+        <button class="button primary" id="openMailApp">Abrir en mi aplicación de correo</button>
+      </div>
+
+      <p class="secondary-text">Si los botones no funcionan, puede copiar el texto del correo y pegarlo manualmente.</p>
+
+      <div class="copy-box">
+        <button class="button secondary" id="copySubject">Copiar asunto</button>
+        <button class="button secondary" id="copyBody">Copiar texto</button>
+        <span id="copyStatus" aria-live="polite"></span>
+      </div>
+
+      <div class="actions actions-right">
+        <button class="button secondary" id="finishButton">Correo preparado</button>
+      </div>
+    </section>
+
+    <section class="panel hidden" id="screenDone">
+      <div class="progress">Finalizado</div>
+      <h1>Correo preparado</h1>
+      <p>Revise que se ha abierto correctamente en su cuenta personal. El AMPA no recibe ni conserva estos datos.</p>
+      <div class="actions actions-right">
+        <button class="button primary" id="restartButton">Volver al inicio</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

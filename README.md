@@ -2,47 +2,35 @@
 
 Miniaplicación web estática para preparar correos de autorización en francés para Vie Scolaire.
 
+Está pensada para alojarse gratis en GitHub Pages e insertarse en Wix mediante un iframe o un bloque “Embed a site”.
+
+## Qué incluye
+
+| Fichero | Función |
+|---|---|
+| `index.html` | Estructura de la aplicación |
+| `styles.css` | Diseño visual |
+| `script.js` | Lógica, validaciones y generación del correo |
+| `README.md` | Instrucciones de configuración y publicación |
+| `TESTS.md` | Set de pruebas funcionales |
+
 ## Modalidades incluidas
 
-1. Vacaciones escolares
-2. Salida puntual con pernocta
-3. Salida puntual sin pernocta
+| Modalidad |
+|---|
+| Vacaciones escolares |
+| Salida puntual con pernocta |
+| Salida puntual sin pernocta |
 
-## Cambios de esta versión
+## Privacidad
 
-- Al seleccionar un tipo de permiso, se abre directamente la pantalla del formulario. Ya no hay botón “Siguiente” en la selección.
-- El formulario se ha reorganizado para que en la misma pantalla aparezcan:
-  - Datos del alumno
-  - Datos del padre, madre o tutor legal
-  - Datos específicos de la salida
-- Las fechas vuelven a ser campos de calendario con `type="date"`.
-- En el correo, las fechas se convierten a formato europeo `DD/MM/AAAA`.
-- Las horas se mantienen como `type="time"` en pantalla y se convierten en el correo a formato francés, por ejemplo `16h00`.
-- Se ha eliminado del correo la frase “au format 24 h”.
-- En salida puntual con pernocta se proponen por defecto:
-  - Hora de salida: `18:30`
-  - Hora de regreso: `16:00`
-- Los botones de navegación se llaman “Volver” para poder corregir pantallas anteriores.
-- Se ha corregido la línea de padres para que el correo indique `Personne responsable : Parents` en una sola línea.
-- Se mantiene la lógica de:
-  - Pernocta con padres
-  - Pernocta con otra persona
-  - DNI opcional de la persona responsable
-  - Salida sin pernocta con o sin acompañante
+La aplicación no utiliza backend, base de datos, login, historial, cookies propias ni almacenamiento local persistente.
 
-## Archivos
+Los datos introducidos se utilizan únicamente en el navegador para preparar el correo. El AMPA no recibe ni conserva estos datos desde esta herramienta.
 
-| Archivo | Función |
-|---|---|
-| `index.html` | Estructura de la página |
-| `styles.css` | Estilo visual compacto adaptado al AMPA |
-| `script.js` | Validaciones, navegación y generación del correo |
-| `TESTS.md` | Set de pruebas funcionales |
-| `README.md` | Esta guía |
+## Cambiar el email de Vie Scolaire
 
-## Configuración obligatoria
-
-En `script.js`, sustituir:
+Abra `script.js` y sustituya esta línea:
 
 ```js
 const EMAIL_VIE_SCOLAIRE = "viescolaire@ejemplo.fr";
@@ -50,10 +38,72 @@ const EMAIL_VIE_SCOLAIRE = "viescolaire@ejemplo.fr";
 
 por el email real de Vie Scolaire.
 
+## Formato de fecha y hora
+
+En pantalla:
+
+| Campo | Tipo |
+|---|---|
+| Fechas | Calendario `type="date"` |
+| Horas | Selector horario `type="time"` |
+
+En el correo:
+
+| Dato | Formato |
+|---|---|
+| Fecha | `DD/MM/AAAA` |
+| Hora | `18h30`, `16h00` |
+
+No se incluye en el correo ninguna frase como `format 24 h` o `au format 24 h`.
+
 ## Nota sobre Gmail
 
-La URL de Gmail incluye el email del tutor legal con `authuser`, pero Google no garantiza que una web externa pueda forzar siempre la cuenta exacta desde la que se abre el borrador. Por eso la pantalla de revisión incluye un aviso para que la familia compruebe la cuenta antes de enviar.
+El botón de Gmail abre una ventana de composición con destinatario, copia, asunto y cuerpo.
 
-## Privacidad
+El enlace incluye `authuser` con el email del tutor legal, pero Google no garantiza que una web externa pueda forzar siempre la cuenta exacta. La familia debe comprobar visualmente que el correo se abre desde su cuenta personal antes de enviarlo.
 
-No se usa base de datos, login ni backend. Los datos introducidos se procesan únicamente en el navegador para generar el correo.
+## Subir a GitHub
+
+1. Crear un repositorio público en GitHub.
+2. Subir estos ficheros a la raíz del repositorio:
+   - `index.html`
+   - `styles.css`
+   - `script.js`
+   - `README.md`
+   - `TESTS.md`
+3. Confirmar los cambios con `Commit changes`.
+
+## Publicar con GitHub Pages
+
+1. Entrar en `Settings`.
+2. Abrir `Pages`.
+3. En `Source`, elegir `Deploy from a branch`.
+4. En `Branch`, elegir `main`.
+5. En carpeta, elegir `/root`.
+6. Guardar.
+
+GitHub generará una URL similar a:
+
+```text
+https://usuario.github.io/nombre-del-repositorio/
+```
+
+## Embeber en Wix
+
+En Wix, añadir un bloque de tipo `Embed a site` o `Embed HTML`.
+
+Con `Embed a site`, pegar directamente la URL de GitHub Pages.
+
+Con `Embed HTML`, se puede usar:
+
+```html
+<iframe
+  src="https://usuario.github.io/nombre-del-repositorio/"
+  width="100%"
+  height="1300"
+  style="border:0; background:#FBF5EF;"
+  title="Asistente de permisos de salida del internado">
+</iframe>
+```
+
+Revisar la altura en escritorio y móvil para evitar que el formulario quede cortado.

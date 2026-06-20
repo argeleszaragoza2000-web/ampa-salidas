@@ -1,106 +1,112 @@
-# Set de pruebas
+# Set de pruebas funcionales
 
-## A. Carga inicial y navegación
+## A. Navegación
 
 | Nº | Prueba | Resultado esperado |
 |---|---|---|
-| A1 | Abrir `index.html` o la URL de GitHub Pages | Se muestra “Preparar una autorización de salida” |
-| A2 | Pulsar “Comenzar” | Se muestra la selección del tipo de salida |
-| A3 | Seleccionar “Vacaciones escolares” | Se abre directamente el formulario de vacaciones |
-| A4 | Seleccionar “Salida puntual con pernocta” | Se abre directamente el formulario de pernocta |
-| A5 | Seleccionar “Salida puntual sin pernocta” | Se abre directamente el formulario sin pernocta |
-| A6 | Pulsar “Volver” desde el formulario | Regresa a la selección de tipo |
-| A7 | Pulsar “Volver” desde revisión | Regresa al formulario para modificar datos |
+| A1 | Abrir la página | Se muestra la pantalla de bienvenida |
+| A2 | Pulsar “Comenzar” | Se muestra la selección de tipo |
+| A3 | Pulsar “Vacaciones escolares” | Se abre directamente el formulario de vacaciones |
+| A4 | Pulsar “Salida puntual con pernocta” | Se abre directamente el formulario de pernocta |
+| A5 | Pulsar “Salida puntual sin pernocta” | Se abre directamente el formulario sin pernocta |
+| A6 | Pulsar “Volver” desde el formulario | Vuelve a la selección de tipo |
+| A7 | Pulsar “Volver” desde revisión | Vuelve al formulario con los datos introducidos |
+| A8 | Pulsar “Volver al inicio” desde pantalla final | Vuelve a bienvenida y limpia el formulario |
 
-## B. Datos comunes
+## B. Campos obligatorios comunes
 
 | Nº | Prueba | Resultado esperado |
 |---|---|---|
 | B1 | Dejar nombre del alumno vacío | Error “Falta el nombre del alumno.” |
 | B2 | Dejar curso vacío | Error “Falta el curso.” |
-| B3 | Dejar nombre del tutor vacío | Error correspondiente |
-| B4 | Dejar email del tutor vacío | Error correspondiente |
-| B5 | Dejar teléfono vacío | Error correspondiente |
-| B6 | Dejar documento de identidad del tutor vacío | Error correspondiente |
-| B7 | Dejar email del alumno vacío | No bloquea el avance |
+| B3 | Dejar email del alumno vacío | No bloquea el avance |
+| B4 | Dejar nombre del tutor legal vacío | Error correspondiente |
+| B5 | Dejar email del tutor legal vacío | Error correspondiente |
+| B6 | Dejar teléfono de contacto vacío | Error correspondiente |
+| B7 | Dejar documento de identidad del tutor legal vacío | Error correspondiente |
 
-## C. Fechas y horas
-
-| Nº | Prueba | Resultado esperado |
-|---|---|---|
-| C1 | Pulsar un campo de fecha | Se abre selector de calendario del navegador |
-| C2 | Seleccionar una fecha | El campo acepta la fecha |
-| C3 | Generar correo con fecha seleccionada | La fecha aparece en el correo como DD/MM/AAAA |
-| C4 | Introducir hora `18:30` | El campo acepta la hora |
-| C5 | Generar correo | El correo muestra la hora como `18h30` y no incluye “au format 24 h” |
-| C6 | En navegador que muestre AM/PM | No se fuerza cambio visual del campo; el correo sí convierte la hora a formato francés `HHhMM` |
-
-## D. Vacaciones escolares
+## C. Vacaciones escolares
 
 | Nº | Prueba | Resultado esperado |
 |---|---|---|
-| D1 | Seleccionar “Vacaciones escolares” | En la misma pantalla aparecen alumno, tutor legal y datos de vacaciones |
-| D2 | No responder a “¿Usará el autobús del AMPA?” | Error específico |
-| D3 | Marcar checkbox 13:00 | El correo incluye la frase de autorización de salida a las 13h00 |
-| D4 | No marcar checkbox 13:00 | El correo no incluye esa frase |
-| D5 | Completar todo correctamente | Se muestra revisión del correo en francés |
-| D6 | Revisar correo | No aparece “format 24 h” ni “au format 24 h” |
+| C1 | Dejar fecha de salida vacía | Error “Falta la fecha de salida.” |
+| C2 | Dejar hora de salida vacía | Error “Falta la hora de salida.” |
+| C3 | Dejar fecha de regreso vacía | Error “Falta la fecha de regreso.” |
+| C4 | Dejar hora de regreso vacía | Error “Falta la hora de regreso.” |
+| C5 | No indicar si usará autobús AMPA | Error específico |
+| C6 | Marcar autorización 13:00 | El correo incluye la autorización de salida a las 13h00 |
+| C7 | No marcar autorización 13:00 | El correo no incluye esa frase |
+| C8 | Generar correo | Las fechas aparecen como `DD/MM/AAAA` |
+| C9 | Generar correo | Las horas aparecen como `18h30`, `16h00` |
+| C10 | Revisar correo | No aparece `format 24 h` ni `au format 24 h` |
 
-## E. Salida puntual con pernocta
-
-| Nº | Prueba | Resultado esperado |
-|---|---|---|
-| E1 | Seleccionar “Salida puntual con pernocta” | En la misma pantalla aparecen alumno, tutor legal, fechas, responsable y motivo |
-| E2 | Entrar en la pantalla | Hora de salida propuesta `18:30` y hora de regreso propuesta `16:00` |
-| E3 | Modificar las horas propuestas | El correo usa las horas modificadas y las muestra como `HHhMM` |
-| E4 | No indicar si sale con padres u otra persona | Error específico |
-| E5 | Seleccionar “Sale con sus padres” | No se muestran campos de otra persona |
-| E6 | Seleccionar “Sale con sus padres” y generar correo | El correo incluye exactamente `Personne responsable : Parents` en una sola línea |
-| E7 | Seleccionar “Sale con otra persona” | Se abren campos de persona responsable |
-| E8 | Dejar nombre de otra persona vacío | Error específico |
-| E9 | Dejar relación vacía | Error específico |
-| E10 | Dejar teléfono vacío | Error específico |
-| E11 | Dejar DNI de otra persona vacío | No bloquea el avance |
-| E12 | Rellenar DNI de otra persona | El correo lo incluye |
-| E13 | Seleccionar “Otro motivo” | Aparece campo de motivo en francés |
-| E14 | Seleccionar “Otro motivo” y dejarlo vacío | Error específico |
-| E15 | Seleccionar “No deseamos incluir motivo” | Aparece nota y el correo no incluye motivo |
-| E16 | Revisar correo | No aparece “format 24 h” ni “au format 24 h” |
-
-## F. Salida puntual sin pernocta
+## D. Salida puntual con pernocta
 
 | Nº | Prueba | Resultado esperado |
 |---|---|---|
-| F1 | Seleccionar “Salida puntual sin pernocta” | En la misma pantalla aparecen alumno, tutor legal, datos de salida y acompañante |
-| F2 | Ver sección de acompañante | Aparece pregunta “¿Desea incluir una persona acompañante?” |
-| F3 | No contestar si incluye acompañante | Error específico |
-| F4 | Seleccionar “No” en acompañante | No se muestran campos de acompañante |
-| F5 | Seleccionar “No” y generar correo | El correo no menciona acompañante |
-| F6 | Seleccionar “Sí” en acompañante | Se abren campos de nombre y teléfono |
-| F7 | Seleccionar “Sí” y dejar nombre vacío | Error específico |
-| F8 | Seleccionar “Sí” y dejar teléfono vacío | Error específico |
-| F9 | Seleccionar “Sí” y completar acompañante | El correo incluye “Personne accompagnante” |
-| F10 | Seleccionar “Otro motivo” | Aparece campo de motivo en francés |
-| F11 | Seleccionar “No deseamos incluir motivo” | Aparece nota y el correo no incluye motivo |
-| F12 | Revisar correo | Las horas aparecen como `HHhMM` y no aparece “format 24 h” ni “au format 24 h” |
+| D1 | Abrir modalidad | Hora de salida propuesta `18:30` |
+| D2 | Abrir modalidad | Hora de regreso propuesta `16:00` |
+| D3 | Modificar horas | El correo usa las horas modificadas |
+| D4 | No indicar si sale con padres u otra persona | Error específico |
+| D5 | Seleccionar “Sale con sus padres” | No se muestran campos de otra persona |
+| D6 | Generar con padres | El correo incluye `Personne responsable : Parents` |
+| D7 | Seleccionar “Sale con otra persona” | Se muestran campos de persona responsable |
+| D8 | Dejar nombre de persona responsable vacío | Error correspondiente |
+| D9 | Dejar relación vacía | Error correspondiente |
+| D10 | Dejar teléfono vacío | Error correspondiente |
+| D11 | Dejar documento de identidad de la persona responsable vacío | No bloquea el avance |
+| D12 | Rellenar documento de identidad | El correo lo incluye |
+| D13 | No seleccionar motivo | Error correspondiente |
+| D14 | Seleccionar “Otro motivo” | Aparece campo “Redacte el motivo en francés” |
+| D15 | Seleccionar “Otro motivo” y dejarlo vacío | Error específico |
+| D16 | Seleccionar “No deseamos incluir motivo” | Aparece nota y el correo no incluye bloque de motivo |
+| D17 | Generar correo | Fechas en `DD/MM/AAAA` |
+| D18 | Generar correo | Horas en formato `18h30`, `16h00` |
+| D19 | Revisar correo | No aparece `format 24 h` ni `au format 24 h` |
 
-## G. Apertura de correo
-
-| Nº | Prueba | Resultado esperado |
-|---|---|---|
-| G1 | Pulsar “Abrir en Gmail” | Se abre Gmail con destinatario, asunto y cuerpo completados |
-| G2 | Pulsar “Abrir en Outlook” | Se abre Outlook con destinatario, asunto y cuerpo completados |
-| G3 | Pulsar “Abrir en mi aplicación de correo” | Se abre la aplicación de correo del dispositivo si está configurada |
-| G4 | Pulsar “Copiar asunto” | Se copia el asunto |
-| G5 | Pulsar “Copiar texto” | Se copia el cuerpo del correo |
-| G6 | Revisar cuenta antes de enviar | La familia comprueba visualmente que Gmail/Outlook usa su cuenta personal |
-
-## H. Responsive e integración en Wix
+## E. Salida puntual sin pernocta
 
 | Nº | Prueba | Resultado esperado |
 |---|---|---|
-| H1 | Abrir en ordenador | El formulario se ve compacto, centrado y sin aspecto de app externa |
-| H2 | Abrir en móvil | Las tarjetas y campos se apilan correctamente |
-| H3 | Embeber en Wix con iframe | La herramienta carga dentro de la página Wix |
-| H4 | Revisar altura del iframe en escritorio | No queda cortado |
-| H5 | Revisar altura del iframe en móvil | No queda cortado |
+| E1 | Abrir modalidad | Hora de salida propuesta `17:00` |
+| E2 | Abrir modalidad | Hora de regreso propuesta `20:30` |
+| E3 | Modificar horas | El correo usa las horas modificadas |
+| E4 | Dejar fecha vacía | Error “Falta la fecha.” |
+| E5 | Dejar hora de salida vacía | Error correspondiente |
+| E6 | Dejar hora de regreso vacía | Error correspondiente |
+| E7 | No seleccionar motivo | Error correspondiente |
+| E8 | Seleccionar “Otro motivo” | Aparece campo “Redacte el motivo en francés” |
+| E9 | Seleccionar “Otro motivo” y dejarlo vacío | Error específico |
+| E10 | Seleccionar “No deseamos incluir motivo” | Aparece nota y el correo no incluye bloque de motivo |
+| E11 | No indicar si desea acompañante | Error específico |
+| E12 | Seleccionar “No” en acompañante | No se muestran campos de acompañante |
+| E13 | Generar con acompañante “No” | El correo no menciona persona acompañante |
+| E14 | Seleccionar “Sí” en acompañante | Se muestran campos de acompañante |
+| E15 | Dejar nombre de acompañante vacío | Error correspondiente |
+| E16 | Dejar teléfono de acompañante vacío | Error correspondiente |
+| E17 | Generar con acompañante | El correo incluye `Personne accompagnante` |
+| E18 | Generar correo | Fechas en `DD/MM/AAAA` |
+| E19 | Generar correo | Horas en formato `17h00`, `20h30` |
+| E20 | Revisar correo | No aparece `format 24 h` ni `au format 24 h` |
+
+## F. Revisión y apertura de correo
+
+| Nº | Prueba | Resultado esperado |
+|---|---|---|
+| F1 | Generar correo | Se muestra Para, Asunto y vista previa completa |
+| F2 | Pulsar Gmail | Se abre Gmail con destinatario, cc, asunto y cuerpo |
+| F3 | Pulsar Outlook | Se abre Outlook con destinatario, cc, asunto y cuerpo |
+| F4 | Pulsar “Abrir en mi aplicación de correo” | Se abre `mailto:` si el dispositivo tiene cliente de correo |
+| F5 | Pulsar “Copiar asunto” | Se copia el asunto |
+| F6 | Pulsar “Copiar texto” | Se copia el cuerpo |
+| F7 | Revisar aviso de Gmail/Outlook | Se indica que la familia debe comprobar la cuenta activa |
+
+## G. Móvil y Wix
+
+| Nº | Prueba | Resultado esperado |
+|---|---|---|
+| G1 | Abrir en móvil | El contenido se apila en una columna |
+| G2 | Abrir en ordenador | Se ve compacto y centrado |
+| G3 | Insertar en Wix con Embed a site | La aplicación carga dentro de Wix |
+| G4 | Revisar iframe en escritorio | No queda cortado |
+| G5 | Revisar iframe en móvil | No queda cortado |

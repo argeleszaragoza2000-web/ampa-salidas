@@ -373,14 +373,17 @@ function buildEmail() {
     emailContent = buildDayEmail(data);
   }
 
+  const ccEmails = [data.guardianEmail, data.studentEmail]
+    .filter(Boolean)
+    .join(",");
+
   return {
     to: EMAIL_VIE_SCOLAIRE,
-    cc: data.studentEmail,
+    cc: ccEmails,
     subject: emailContent.subject,
     body: emailContent.body
   };
 }
-
 function showReview(email) {
   setText("reviewTo", email.to);
   setText("reviewSubject", email.subject);

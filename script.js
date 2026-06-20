@@ -1,4 +1,4 @@
-const EMAIL_VIE_SCOLAIRE = "viescolaire@ejemplo.fr";
+const EMAIL_VIE_SCOLAIRE = "sudafricakananga2009@gmail.com";
 
 const screens = {
   welcome: document.getElementById("screenWelcome"),

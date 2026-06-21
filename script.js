@@ -194,6 +194,7 @@ function validateSinPernocta(errors) {
 
   if (getCheckedValue("dayHasCompanion") === "yes") {
     addRequired(errors, "dayCompanionName", "Falta el nombre de la persona acompañante.");
+    addRequired(errors, "dayCompanionRelation", "Falta la relación de la persona acompañante con el alumno.");
     addRequired(errors, "dayCompanionPhone", "Falta el teléfono de la persona acompañante.");
   }
 }
@@ -353,10 +354,20 @@ Sortie prévue :
   body += buildReasonBlock(reasonId, getValue("dayOtherReason"));
 
   if (getCheckedValue("dayHasCompanion") === "yes") {
+    const companionRelationValue = getValue("dayCompanionRelation");
+    const companionRelationLabel = responsibleRelationLabels[companionRelationValue] || "";
+
     body += `
 
 Personne accompagnante :
-- Nom et prénom : ${getValue("dayCompanionName")}
+- Nom et prénom : ${getValue("dayCompanionName")}`;
+
+    if (companionRelationLabel) {
+      body += `
+- Relation avec l'élève : ${companionRelationLabel}`;
+    }
+
+    body += `
 - Téléphone : ${getValue("dayCompanionPhone")}`;
   }
 

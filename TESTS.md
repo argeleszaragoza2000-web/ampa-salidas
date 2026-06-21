@@ -5,6 +5,8 @@
 - El email del alumno es obligatorio.
 - Los datos del progenitor 1 son obligatorios; el progenitor 2 es opcional.
 - El correo incluye copia al alumno, progenitor 1 y progenitor 2 si se ha indicado.
+- Con solo progenitor 1, el correo usa `Je soussigné(e)` y `AUTORISE`.
+- Con progenitor 1 y 2, el correo usa `Nous, soussignés` y `AUTORISONS`.
 - El aviso previo aparece en rojo y negrita e indica que hay que adjuntar DNIs.
 - Los botones muestran `Ir atrás` y `Borrar datos`.
 - Vacaciones con bus genera tres bullets.

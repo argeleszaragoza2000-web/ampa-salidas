@@ -9,6 +9,7 @@ Incluye cinco ficheros: `index.html`, `styles.css`, `script.js`, `README.md` y `
 - Email del alumno obligatorio.
 - Datos obligatorios del progenitor 1: nombre, DNI / Carte d’Identité y email. El progenitor 2 puede indicarse si procede.
 - Copia automática al alumno, al progenitor 1 y al progenitor 2 si se ha indicado.
+- Si solo se indica el progenitor 1, el correo se redacta en singular: `Je soussigné(e)… AUTORISE…`. Si se indica progenitor 2, se redacta en plural: `Nous, soussignés… AUTORISONS…`.
 - Aviso previo al envío en rojo y negrita con recordatorio de adjuntar DNIs.
 - Botones `Ir atrás` y `Borrar datos`.
 - Correos en francés para vacaciones, salida con pernocta y salida sin pernocta.

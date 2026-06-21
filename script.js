@@ -20,6 +20,14 @@ const reasonSentences = {
   activity: "Cette sortie est demandée afin de permettre à l'élève de participer à une activité extrascolaire."
 };
 
+const responsibleRelationLabels = {
+  host_family: "famille d'accueil",
+  relative: "membre de la famille",
+  friend: "ami(e)",
+  coach: "entraîneur",
+  undefined: ""
+};
+
 let selectedPermissionType = "";
 let previousScreenForError = "form";
 let generatedEmail = {
@@ -243,6 +251,34 @@ ${reasonSentences[reasonId]}`;
   return "";
 }
 
+function buildOvernightResponsibleIntroText(data) {
+  const responsibleType = getCheckedValue("overnightResponsibleType");
+
+  if (responsibleType === "parents") {
+    return `Je soussigné(e) ${data.guardianName}, responsable légal(e) de l'élève ${data.studentName}, scolarisé(e) en ${data.studentClass}, autorise mon enfant à quitter l'internat pour une sortie ponctuelle avec nuitée avec ses parents.`;
+  }
+
+  const responsibleName = getValue("overnightResponsibleName");
+  const relationValue = getValue("overnightResponsibleRelation");
+  const relationLabel = responsibleRelationLabels[relationValue] || "";
+  const responsibleId = getValue("overnightResponsibleId");
+  const responsiblePhone = getValue("overnightResponsiblePhone");
+
+  let responsibleDetails = responsibleName;
+
+  if (relationLabel) {
+    responsibleDetails += `, ${relationLabel}`;
+  }
+
+  if (responsibleId) {
+    responsibleDetails += `, avec carte d'identité ${responsibleId}`;
+  }
+
+  responsibleDetails += ` et numéro de téléphone ${responsiblePhone}`;
+
+  return `Je soussigné(e) ${data.guardianName}, responsable légal(e) de l'élève ${data.studentName}, scolarisé(e) en ${data.studentClass}, autorise mon enfant à quitter l'internat pour une sortie ponctuelle avec nuitée avec ${responsibleDetails}.`;
+}
+
 function buildVacationEmail(data) {
   const subject = `Autorisation sortie vacances - ${data.studentName} - ${formatDateForEmail(getValue("vacDepartureDate"))} à ${formatDateForEmail(getValue("vacReturnDate"))}`;
 
@@ -281,12 +317,11 @@ Nous autorisons notre enfant à sortir de l'établissement à 13h00 afin d'utili
 
 function buildOvernightEmail(data) {
   const subject = `Autorisation de sortie ponctuelle avec nuitée - ${data.studentName}`;
-  const responsibleType = getCheckedValue("overnightResponsibleType");
   const reasonId = getValue("overnightReason");
 
   let body = `Madame, Monsieur,
 
-Je soussigné(e) ${data.guardianName}, responsable légal(e) de l'élève ${data.studentName}, scolarisé(e) en ${data.studentClass}, autorise mon enfant à quitter l'internat pour une sortie ponctuelle avec nuitée.
+${buildOvernightResponsibleIntroText(data)}
 
 Départ prévu :
 - Date : ${formatDateForEmail(getValue("overnightDepartureDate"))}
@@ -295,26 +330,6 @@ Départ prévu :
 Retour prévu :
 - Date : ${formatDateForEmail(getValue("overnightReturnDate"))}
 - Heure : ${formatTimeForEmail(getValue("overnightReturnTime"))}`;
-
-  if (responsibleType === "parents") {
-    body += `
-
-Personne responsable : Parents`;
-  }
-
-  if (responsibleType === "other") {
-    body += `
-
-Personne adulte responsable pendant la sortie :
-- Nom et prénom : ${getValue("overnightResponsibleName")}
-- Relation avec l'élève : ${getValue("overnightResponsibleRelation")}
-- Téléphone : ${getValue("overnightResponsiblePhone")}`;
-
-    if (getValue("overnightResponsibleId")) {
-      body += `
-- Pièce d'identité : ${getValue("overnightResponsibleId")}`;
-    }
-  }
 
   body += buildReasonBlock(reasonId, getValue("overnightOtherReason"));
   body += buildLegalGuardianBlock(data);

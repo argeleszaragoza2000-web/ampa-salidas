@@ -2,7 +2,6 @@ const EMAIL_VIE_SCOLAIRE = "sudafricakananga2009@gmail.com";
 
 const screens = {
   welcome: document.getElementById("screenWelcome"),
-  type: document.getElementById("screenType"),
   form: document.getElementById("screenForm"),
   error: document.getElementById("screenError"),
   review: document.getElementById("screenReview"),
@@ -105,6 +104,8 @@ function openFormForType(permissionType) {
 
   if (permissionType === "vacaciones") {
     document.getElementById("vacacionesSection").classList.remove("hidden");
+    if (!getValue("vacDepartureTime")) document.getElementById("vacDepartureTime").value = "13:00";
+    if (!getValue("vacReturnTime")) document.getElementById("vacReturnTime").value = "16:00";
   }
 
   if (permissionType === "pernocta") {
@@ -243,7 +244,7 @@ ${reasonSentences[reasonId]}`;
 }
 
 function buildVacationEmail(data) {
-  const subject = `Autorisation de sortie - ${data.studentName} - Vacances scolaires`;
+  const subject = `Autorisation sortie vacances - ${data.studentName} - ${formatDateForEmail(getValue("vacDepartureDate"))} à ${formatDateForEmail(getValue("vacReturnDate"))}`;
 
   let body = `Madame, Monsieur,
 
@@ -255,14 +256,22 @@ Départ prévu :
 
 Retour prévu :
 - Date : ${formatDateForEmail(getValue("vacReturnDate"))}
-- Heure : ${formatTimeForEmail(getValue("vacReturnTime"))}
+- Heure : ${formatTimeForEmail(getValue("vacReturnTime"))}`;
 
-Utilisation du bus de l'AMPA : ${getCheckedValue("vacUsesBus")}.`;
+  if (getCheckedValue("vacUsesBus") === "Oui") {
+    body += `
+
+Nous autorisons également notre enfant à utiliser le service de bus organisé par l'Association des Parents d'Élèves Espagnols en France. Il voyagera accompagné par les adultes responsables désignés par l'association.`;
+  } else {
+    body += `
+
+Notre enfant n'utilisera pas le service de bus organisé par l'Association des Parents d'Élèves Espagnols en France.`;
+  }
 
   if (document.getElementById("vacAuthorize1300").checked) {
     body += `
 
-J'autorise également la sortie de l'établissement à 13h00, si cela est applicable.`;
+Nous autorisons notre enfant à sortir de l'établissement à 13h00 afin d'utiliser le service de bus.`;
   }
 
   body += buildLegalGuardianBlock(data);
@@ -454,9 +463,7 @@ function resetApplication() {
   document.getElementById("dayCompanionFields").classList.add("hidden");
 }
 
-document.getElementById("btnStart").addEventListener("click", () => showScreen("type"));
-document.getElementById("btnTypeBack").addEventListener("click", () => showScreen("welcome"));
-document.getElementById("btnFormBack").addEventListener("click", () => showScreen("type"));
+document.getElementById("btnFormBack").addEventListener("click", () => showScreen("welcome"));
 document.getElementById("btnErrorBack").addEventListener("click", () => showScreen(previousScreenForError));
 document.getElementById("btnReviewBack").addEventListener("click", () => showScreen("form"));
 document.getElementById("btnDone").addEventListener("click", () => showScreen("done"));

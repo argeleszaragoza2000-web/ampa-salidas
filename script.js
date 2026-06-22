@@ -1,4 +1,4 @@
-const EMAIL_VIE_SCOLAIRE = "sudafricakananga2009@gmail.com";
+const EMAIL_VIE_SCOLAIRE = "PON UNA DIRECCIÓN DE CORREO";
 const screens={welcome:document.getElementById("screenWelcome"),form:document.getElementById("screenForm"),error:document.getElementById("screenError"),review:document.getElementById("screenReview"),done:document.getElementById("screenDone")};
 const permissionTitles={vacaciones:"Vacaciones escolares",pernocta:"Salida puntual con pernocta",sinPernocta:"Salida puntual sin pernocta"};
 const frenchWeekdays=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];

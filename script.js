@@ -1,4 +1,4 @@
-const EMAIL_VIE_SCOLAIRE = "Introduce el mail de vie scolaire";
+const EMAIL_VIE_SCOLAIRE = "PON UN CORREO@PON UN CORREO";
 const screens={welcome:document.getElementById("screenWelcome"),form:document.getElementById("screenForm"),error:document.getElementById("screenError"),review:document.getElementById("screenReview"),done:document.getElementById("screenDone")};
 const permissionTitles={vacaciones:"Vacaciones escolares",pernocta:"Salida puntual con pernocta",sinPernocta:"Salida puntual sin pernocta"};
 const frenchWeekdays=["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
